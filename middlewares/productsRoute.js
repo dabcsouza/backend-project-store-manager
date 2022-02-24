@@ -38,4 +38,12 @@ productsRoute.put('/:id',
     res.status(200).json({ id, name, quantity });
   }));
 
+productsRoute.delete('/:id',
+  validateProductId,
+  rescue(async (req, res) => {
+    const { id } = req.params;
+    await productsController.exclude(Number(id));
+    res.status(204).json();
+  }));
+
 module.exports = productsRoute;

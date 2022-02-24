@@ -24,5 +24,14 @@ const hasProductInDB = async (productName) => {
 
 const create = (infos) => productsModel.create(infos);
 const update = (infos) => productsModel.update(infos);
+const exclude = (id) => productsModel.exclude(id);
 
-module.exports = { getAll, getById, getByName, hasProductInDB, create, update };
+module.exports = {
+  getAll,
+  getById,
+  getByName,
+  hasProductInDB,
+  create,
+  update,
+  exclude,
+};

@@ -6,5 +6,14 @@ const getByName = (name) => productsService.getByName(name);
 const hasProductInDB = (productName) => productsService.hasProductInDB(productName);
 const create = (infos) => productsService.create(infos);
 const update = (infos) => productsService.update(infos);
+const exclude = (id) => productsService.exclude(id);
 
-module.exports = { getAll, getById, getByName, hasProductInDB, create, update };
+module.exports = {
+  getAll,
+  getById,
+  getByName,
+  hasProductInDB,
+  create,
+  update,
+  exclude,
+};
