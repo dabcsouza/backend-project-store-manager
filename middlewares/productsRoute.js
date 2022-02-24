@@ -18,8 +18,13 @@ productsRoute.get('/:id', rescue(async (req, res) => {
     : res.status(200).json(result[0]);
 }));
 
-productsRoute.post('/', validateProducts, async (req, res) => {
-  res.end();
-});
+productsRoute.post('/', validateProducts, rescue(async (req, res) => {
+  const { name, quantity } = req.body;
+  if (await productsController.hasProductInDB(name)) {
+    return res.status(409).json({ message: 'Product already exists' });
+  }
+  const id = await productsController.create({ name, quantity });
+  return res.status(201).json({ id, name, quantity });
+}));
 
 module.exports = productsRoute;

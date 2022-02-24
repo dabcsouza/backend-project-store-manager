@@ -10,9 +10,10 @@ const httpErrorCode = {
 const validateProducts = async (req, res, next) => {
   try {
     await productsSchema.validateAsync(req.body);
-    next();
+    return next();
   } catch (e) {
-    res.status(httpErrorCode[e.message]).json({ message: e.message });
+    const code = e.message ? httpErrorCode[e.message] : 404;
+    res.status(code).json({ message: e.message });
   }
 };
 
