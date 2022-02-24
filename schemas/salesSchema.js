@@ -6,6 +6,7 @@ const salesSchema = Joi.object({
     .required()
     .min(0)
     .messages({
+      'number.empty': '"productId" is required',
       'number.min': '"productId" must be greater than or equal to 1',
     }),
   quantity: Joi
@@ -13,6 +14,7 @@ const salesSchema = Joi.object({
     .required()
     .min(1)
     .messages({
+      'number.empty': '"quantity" is required',
       'number.min': '"quantity" must be greater than or equal to 1',
     }),
 });

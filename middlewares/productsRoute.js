@@ -2,6 +2,7 @@ require('./errorMiddleware');
 const express = require('express');
 const rescue = require('express-rescue');
 const productsController = require('../controllers/productsController');
+const validateProductId = require('./validateProductId');
 const validateProducts = require('./validateProducts');
 
 const productsRoute = express.Router();
@@ -26,5 +27,15 @@ productsRoute.post('/', validateProducts, rescue(async (req, res) => {
   const id = await productsController.create({ name, quantity });
   return res.status(201).json({ id, name, quantity });
 }));
+
+productsRoute.put('/:id',
+  validateProductId,
+  validateProducts,
+  rescue(async (req, res) => {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+    await productsController.update({ name, quantity, id });
+    res.status(200).json({ id, name, quantity });
+  }));
 
 module.exports = productsRoute;

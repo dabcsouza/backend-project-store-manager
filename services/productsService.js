@@ -23,5 +23,6 @@ const hasProductInDB = async (productName) => {
 };
 
 const create = (infos) => productsModel.create(infos);
+const update = (infos) => productsModel.update(infos);
 
-module.exports = { getAll, getById, getByName, hasProductInDB, create };
+module.exports = { getAll, getById, getByName, hasProductInDB, create, update };
