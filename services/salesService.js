@@ -5,6 +5,14 @@ const httpResponse = {
 };
 
 const getAll = async () => salesModel.getAll();
+
+const checkSaleById = async (id) => {
+  const response = await salesModel.getById(id);
+  return response.length === 0
+    ? { code: 404, message: httpResponse[404] }
+    : {};
+};
+
 const getById = async (id) => {
   const response = await salesModel.getById(id);
   return response.length === 0
@@ -22,4 +30,19 @@ const insertProductsInSale = async (sale) => {
   return { id, itemsSold: sale };
 };
 
-module.exports = { getAll, getById, createSale, insertProductsInSale };
+const updateProductsInSale = async (sale, id) => {
+  await salesModel.deleteSalesProducts(id);
+  sale.forEach(async ({ productId, quantity }) => {
+    await salesModel.registerSales({ productId, quantity, id });
+  });
+  return { id, itemUpdated: sale };
+};
+
+module.exports = {
+  checkSaleById,
+  getAll,
+  getById,
+  createSale,
+  insertProductsInSale,
+  updateProductsInSale,
+};
