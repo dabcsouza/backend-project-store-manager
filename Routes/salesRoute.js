@@ -1,10 +1,10 @@
-require('./errorMiddleware');
+require('../middlewares/errorMiddleware');
 const express = require('express');
 const rescue = require('express-rescue');
 const salesController = require('../controllers/salesController');
-const validateProductIdSales = require('./validateProductIdSales');
-const validateSales = require('./validateSales');
-const validateSalesId = require('./validateSalesId');
+const validateProductIdSales = require('../middlewares/validateProductIdSales');
+const validateSales = require('../middlewares/validateSales');
+const validateSalesId = require('../middlewares/validateSalesId');
 
 const salesRoute = express.Router();
 

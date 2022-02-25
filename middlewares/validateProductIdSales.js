@@ -1,9 +1,9 @@
-const productsController = require('../controllers/productsController');
+const productsService = require('../services/productsService');
 
 const validateProductIdSales = async (req, res, next) => {
   const listId = req.body.map((product) => Number(product.productId));
   const responseId = listId
-    .map((id) => productsController.getById(id));
+    .map((id) => productsService.getById(id));
   const responsePromises = await Promise.all(responseId);
   const isInvalidId = responsePromises.map((el) => el.code);
   return isInvalidId.some((el) => el)
