@@ -1,8 +1,39 @@
 const frisby = require("frisby");
+const mysql = require("mysql2/promise");
+const Importer = require("mysql-import");
+require("dotenv").config();
 require("dotenv").config();
 
 describe("03-validations", () => {
   const url = `http://localhost:${process.env.PORT}`;
+  let connection;
+
+  beforeAll(async () => {
+    const {
+      MYSQL_USER,
+      MYSQL_PASSWORD,
+      MYSQL_HOST
+    } = process.env;
+
+    connection = mysql.createPool({
+      host: MYSQL_HOST,
+      user: MYSQL_USER,
+      password: MYSQL_PASSWORD,
+    });
+
+    const importer = new Importer(
+      { user: MYSQL_USER, password: MYSQL_PASSWORD, host: MYSQL_HOST }
+    );
+
+    await importer.import("./StoreManager.sql");
+
+    importer.disconnect();
+  });
+
+  afterAll(async () => {
+    await connection.execute("DROP DATABASE StoreManager")
+    await connection.end();
+  });
 
   describe("3 - Realiza validações nos produtos e nas vendas", () => {
 		it("quando cadastrar um produto será validado que o campo name está presente no body", async () => {
