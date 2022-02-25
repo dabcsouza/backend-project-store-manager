@@ -7,43 +7,19 @@ const validateProducts = require('./validateProducts');
 
 const productsRoute = express.Router();
 
-productsRoute.get('/', rescue(async (_req, res) => {
-  const result = await productsController.getAll();
-  res.status(200).json(result);
-}));
+productsRoute.get('/', rescue(productsController.getAll));
 
-productsRoute.get('/:id', rescue(async (req, res) => {
-  const { id } = req.params;
-  const result = await productsController.getById(Number(id));
-  return result.code ? res.status(result.code).json({ message: result.message })
-    : res.status(200).json(result[0]);
-}));
+productsRoute.get('/:id', rescue(productsController.getById));
 
-productsRoute.post('/', validateProducts, rescue(async (req, res) => {
-  const { name, quantity } = req.body;
-  if (await productsController.hasProductInDB(name)) {
-    return res.status(409).json({ message: 'Product already exists' });
-  }
-  const id = await productsController.create({ name, quantity });
-  return res.status(201).json({ id, name, quantity });
-}));
+productsRoute.post('/', validateProducts, rescue(productsController.create));
 
 productsRoute.put('/:id',
   validateProductId,
   validateProducts,
-  rescue(async (req, res) => {
-    const { id } = req.params;
-    const { name, quantity } = req.body;
-    await productsController.update({ name, quantity, id });
-    res.status(200).json({ id, name, quantity });
-  }));
+  rescue(productsController.update));
 
 productsRoute.delete('/:id',
   validateProductId,
-  rescue(async (req, res) => {
-    const { id } = req.params;
-    await productsController.exclude(Number(id));
-    res.status(204).json();
-  }));
+  rescue(productsController.exclude));
 
 module.exports = productsRoute;
