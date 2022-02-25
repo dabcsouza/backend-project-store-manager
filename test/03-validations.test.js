@@ -2,7 +2,6 @@ const frisby = require("frisby");
 const mysql = require("mysql2/promise");
 const Importer = require("mysql-import");
 require("dotenv").config();
-require("dotenv").config();
 
 describe("03-validations", () => {
   const url = `http://localhost:${process.env.PORT}`;
