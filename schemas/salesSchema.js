@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const salesSchema = Joi.object({
+const salesSchema = Joi.array().items(Joi.object({
   productId: Joi
     .number()
     .required()
@@ -17,6 +17,6 @@ const salesSchema = Joi.object({
       'number.empty': '"quantity" is required',
       'number.min': '"quantity" must be greater than or equal to 1',
     }),
-});
+}));
 
 module.exports = salesSchema;

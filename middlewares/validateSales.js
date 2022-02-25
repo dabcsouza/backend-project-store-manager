@@ -8,13 +8,17 @@ const httpErrorCode = {
 };
 
 const validateSales = async (req, res, next) => {
-  try {
-    await salesSchema.validateAsync(req.body);
-    return next();
-  } catch (e) {
-    const code = e.message ? httpErrorCode[e.message] : 404;
-    res.status(code).json({ message: e.message });
-  }
+    try {
+      await salesSchema.validateAsync(req.body);
+      return next();
+    } catch (e) {
+      const handleMessage = e.message.split('.');
+      const message = handleMessage.length === 1
+        ? handleMessage[0]
+        : `"${handleMessage[1]}`;
+      const code = e.message ? httpErrorCode[message] : 404;
+      return res.status(code).json({ message });
+    }
 };
 
 module.exports = validateSales;
