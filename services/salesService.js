@@ -12,4 +12,14 @@ const getById = async (id) => {
     : response;
 };
 
-module.exports = { getAll, getById };
+const createSale = () => salesModel.createSale();
+const insertProductsInSale = async (sale) => {
+  const result = await createSale();
+  const id = result[0].insertId;
+  sale.forEach(async ({ productId, quantity }) => {
+    await salesModel.registerSales({ productId, quantity, id });
+  });
+  return { id, itemsSold: sale };
+};
+
+module.exports = { getAll, getById, createSale, insertProductsInSale };

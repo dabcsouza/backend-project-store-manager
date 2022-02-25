@@ -19,8 +19,9 @@ salesRoute.get('/:id', rescue(async (req, res) => {
     : res.status(200).json(result);
 }));
 
-salesRoute.post('/', validateSales, validateProductIdSales, async (req, res) => {
-  res.end();
-});
+salesRoute.post('/',
+  validateSales,
+  validateProductIdSales,
+  rescue(salesController.insertProductsInSale));
 
 module.exports = salesRoute;
