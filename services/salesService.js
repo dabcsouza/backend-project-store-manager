@@ -35,7 +35,7 @@ const updateProductsInSale = async (sale, id) => {
   sale.forEach(async ({ productId, quantity }) => {
     await salesModel.registerSales({ productId, quantity, id });
   });
-  return { id, itemUpdated: sale };
+  return { saleId: id, itemUpdated: sale };
 };
 
 module.exports = {

@@ -46,6 +46,7 @@ describe("08-updateSales", () => {
         .expect("status", 200)
         .then((response) => {
           const { json } = response;
+          console.log(json);
 
           expect(json).toHaveProperty("saleId");
           expect(json).toHaveProperty("itemUpdated");
@@ -65,9 +66,9 @@ describe("08-updateSales", () => {
           .expect("status", 200)
           .then((response) => {
             const { json } = response;
-  
+
             expect(json.length).toBe(1);
-  
+
             expect(json[0].productId).toBe(3);
             expect(json[0].quantity).toBe(14);
           });
