@@ -10,17 +10,17 @@ const salesRoute = express.Router();
 
 salesRoute.get('/', rescue(salesController.getAll));
 
-salesRoute.get('/:id', validateSalesId, rescue(salesController.getById));
+salesRoute.get('/:id', rescue(validateSalesId), rescue(salesController.getById));
 
 salesRoute.post('/',
-  validateSales,
-  validateProductIdSales,
+  rescue(validateSales),
+  rescue(validateProductIdSales),
   rescue(salesController.insertProductsInSale));
 
 salesRoute.put('/:id',
-  validateSalesId,
-  validateSales,
-  validateProductIdSales,
+  rescue(validateSalesId),
+  rescue(validateSales),
+  rescue(validateProductIdSales),
   rescue(salesController.update));
 
 module.exports = salesRoute;

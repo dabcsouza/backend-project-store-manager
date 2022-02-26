@@ -9,17 +9,17 @@ const productsRoute = express.Router();
 
 productsRoute.get('/', rescue(productsController.getAll));
 
-productsRoute.get('/:id', validateProductId, rescue(productsController.getById));
+productsRoute.get('/:id', rescue(validateProductId), rescue(productsController.getById));
 
-productsRoute.post('/', validateProducts, rescue(productsController.create));
+productsRoute.post('/', rescue(validateProducts), rescue(productsController.create));
 
 productsRoute.put('/:id',
-  validateProductId,
-  validateProducts,
+  rescue(validateProductId),
+  rescue(validateProducts),
   rescue(productsController.update));
 
 productsRoute.delete('/:id',
-  validateProductId,
+  rescue(validateProductId),
   rescue(productsController.exclude));
 
 module.exports = productsRoute;
