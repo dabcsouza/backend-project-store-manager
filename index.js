@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const productsRoute = require('./Routes/productsRoute');
 const salesRoute = require('./Routes/salesRoute');
-const middlewareError = require('./middlewares/errorMiddleware')
+const middlewareError = require('./middlewares/errorMiddleware');
 
 const app = express();
 
