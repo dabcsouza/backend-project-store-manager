@@ -7,9 +7,9 @@ const httpErrorCode = {
   '"quantity" must be greater than or equal to 1': 422,
 };
 
-const validateProducts = (req, res, next) => {
+const validateProducts = async (req, res, next) => {
   try {
-    productsSchema.validate(req.body);
+    await productsSchema.validateAsync(req.body);
     return next();
   } catch (e) {
     const code = e.message ? httpErrorCode[e.message] : 404;
