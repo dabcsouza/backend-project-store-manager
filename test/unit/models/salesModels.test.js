@@ -106,15 +106,14 @@ describe('Testa a Camada Model para products', () => {
   describe('Testa se é possível registrar uma venda',
   () => {
     const requestBody ={
-        "id": 1,
-        "productId": 1,
-        "quantity": 6
+        id: 1,
+        productId: 1,
+        quantity: 6
     };
 
     before(async () => {
       const expectReturn = [{ affectedRows: 1 }];
-
-    sinon.stub(connection, 'execute').resolves(expectReturn);
+      sinon.stub(connection, 'execute').resolves(expectReturn);
     });
 
     after(async () => {
@@ -122,8 +121,25 @@ describe('Testa a Camada Model para products', () => {
     });
 
     it('Retorna o a quantidade de linhas afetas.', async () => {
-      const [result] = await salesModel.registerSales(requestBody);
+      const result = await salesModel.registerSales(requestBody);
       expect(result.affectedRows).to.be.a('number');
+    });
+  });
+
+  describe('Verifica se é possível deletar o produto de uma venda', () => {
+
+    before(async () => {
+      const expectReturn = undefined;
+      sinon.stub(connection, 'execute').resolves(expectReturn);
+    });
+
+    after(async () => {
+      connection.execute.restore();
+    });
+
+    it('ao chamar a função deleteSalesProducts', async () => {
+      const response = await salesModel.deleteSalesProducts(1);
+      expect(response).to.be.equal(undefined);
     });
   });
 });
