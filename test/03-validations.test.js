@@ -59,7 +59,7 @@ describe("03-validations", () => {
 
 					expect(Object.keys(json)).toContain("message");
 					expect(json.message).toEqual('"quantity" must be greater than or equal to 1');
-				});
+				});d
 			});
 		});
 

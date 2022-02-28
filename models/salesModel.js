@@ -33,6 +33,7 @@ const registerSales = async ({ productId, quantity, id }) => {
   (sale_id, product_id, quantity)
   VALUE (?, ?, ?)`;
   const [response] = await connection.execute(query, [id, productId, quantity]);
+  console.log(response);
   return response;
 };
 

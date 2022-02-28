@@ -1,4 +1,5 @@
 const globalErrorMiddleware = (err, _req, res, _next) => {
+  console.log(err.message);
   if (err.code && err.status) {
     return res.status(err.status).json({ message: err.message, code: err.code });
   }
