@@ -142,5 +142,22 @@ describe('Testa a Camada Model para products', () => {
       expect(response).to.be.equal(undefined);
     });
   });
+
+  describe('Verifica se é possível deletar uma venda', () => {
+
+    before(async () => {
+      const expectReturn = undefined;
+      sinon.stub(connection, 'execute').resolves(expectReturn);
+    });
+
+    after(async () => {
+      connection.execute.restore();
+    });
+
+    it('ao chamar a função deleteSale', async () => {
+      const response = await salesModel.deleteSale(1);
+      expect(response).to.be.equal(undefined);
+    });
+  });
 });
 

@@ -23,4 +23,8 @@ salesRoute.put('/:id',
   rescue(validateProductIdSales),
   rescue(salesController.update));
 
+salesRoute.delete('/:id',
+rescue(validateSalesId),
+rescue(salesController.deleteSale));
+
 module.exports = salesRoute;
