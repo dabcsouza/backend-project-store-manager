@@ -25,6 +25,7 @@ const insertProductsInSale = async (sale) => {
   const result = await createSale();
   const id = result[0].insertId;
   sale.forEach(async ({ productId, quantity }) => {
+    await salesModel.updateProductsQuantity({ productId, quantity });
     await salesModel.registerSales({ productId, quantity, id });
   });
   return { id, itemsSold: sale };
@@ -33,12 +34,18 @@ const insertProductsInSale = async (sale) => {
 const updateProductsInSale = async (sale, id) => {
   await salesModel.deleteSalesProducts(id);
   sale.forEach(async ({ productId, quantity }) => {
+    await salesModel.updateProductsQuantity({ productId, quantity });
     await salesModel.registerSales({ productId, quantity, id });
   });
   return { saleId: id, itemUpdated: sale };
 };
 
 const deleteSale = async (id) => {
+  const result = await salesModel.getById(id);
+  result.forEach(async ({ productId, quantity: quantityUpdate }) => {
+    const quantity = -quantityUpdate;
+    await salesModel.updateProductsQuantity({ productId, quantity });
+  });
   await salesModel.deleteSale(id);
 };
 

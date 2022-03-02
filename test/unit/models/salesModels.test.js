@@ -159,5 +159,47 @@ describe('Testa a Camada Model para products', () => {
       expect(response).to.be.equal(undefined);
     });
   });
+
+  describe('Verifica se é possível atualizar a quantidade de um produto', () => {
+    const requestBody = {
+      productId: 1,
+      quantity: 5,
+    }
+
+    before(async () => {
+      const expectReturn = undefined;
+      sinon.stub(connection, 'execute').resolves(expectReturn);
+    });
+
+    after(async () => {
+      connection.execute.restore();
+    });
+
+    it('ao chamar a função updateProductsQuantity', async () => {
+      const response = await salesModel.updateProductsQuantity(requestBody);
+      expect(response).to.be.equal(undefined);
+    });
+  });
+
+  describe('Verifica se é possível verificar a validade da quantidade de um produto', () => {
+    const requestBody = {
+      productId: 1,
+      quantity: 5,
+    }
+
+    before(async () => {
+      const expectReturn = 'false';
+      sinon.stub(connection, 'execute').resolves(expectReturn);
+    });
+
+    after(async () => {
+      connection.execute.restore();
+    });
+
+    it('ao chamar a função isValidProductQuantity', async () => {
+      const response = await salesModel.isValidProductQuantity(requestBody);
+      expect(response).to.be.equal(false);
+    });
+  });
 });
 
